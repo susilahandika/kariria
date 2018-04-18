@@ -36,14 +36,6 @@
                 </div>
 
                 <div class="col-md-12">
-
-                	<div class="rolandthemes-circle-tabs">
-                		<!-- Nav tabs -->
-                		<ul class="nav nav-tabs" role="tablist">
-                			<li role="presentation" class="active"><a href="#employee" aria-controls="employee" role="tab" data-toggle="tab">Pelamar Kerja</a></li>
-                			<li role="presentation"><a href="#company" aria-controls="company" role="tab" data-toggle="tab">Perusahaan</a></li>
-                		</ul>
-
                 		<!-- Tab panes -->
                 		<div class="tab-content">
                 			<div role="tabpanel" class="tab-pane active" id="employee"><br>
@@ -54,6 +46,13 @@
         				     		    {!! Form::text('fullname', old('fullname'), ['class'=>'form-control']) !!} 
         				         	</div>
         				         </div>
+
+                                 <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="group-form">
+                                        <label><a>Type</a></label>
+                                        {!! Form::select('size', array('P' => 'Pelamar', 'C' => 'Perusahaan'), null, ['class'=>'form-control']) !!} 
+                                    </div>
+                                 </div>
 
         				         <div class="col-lg-12 col-md-12 col-sm-12">
         				         	<div class="group-form">
@@ -87,53 +86,7 @@
 
         				         {!! Form::close() !!}
                 			</div>
-							
-							{{-- 
-							| Form signup perusahaan
-							 --}}
-                			<div role="tabpanel" class="tab-pane" id="company"><br>
-                				{!! Form::open(['url' => 'storecompany', 'method' => 'post']) !!}
-        						<div class="col-lg-12 col-md-12 col-sm-12">
-        				         	<div class="group-form">
-        				     			<label><a href="">Nama Perusahaan</a></label>
-        				     		    {!! Form::text('companyname', null, ['class'=>'form-control']) !!} 
-        				         	</div>
-        				         </div>
-
-        				         <div class="col-lg-12 col-md-12 col-sm-12">
-        				         	<div class="group-form">
-        				     			<label><a href="">Email</a></label>
-        				     		    {!! Form::text('email', null, ['class'=>'form-control']) !!} 
-        				         	</div>
-        				         </div>
-
-        				         <div class="col-lg-12 col-md-12 col-sm-12">
-        				         	<div class="group-form">
-        				     			<label><a href="">Password</a></label>
-        				     		    {!! Form::text('password', null, ['class'=>'form-control']) !!} 
-        				         	</div>
-        				         </div>
-
-        				         <div class="col-lg-12 col-md-12 col-sm-12">
-        				         	<div class="group-form">
-        				     			<label><a href="">Ulangi Password</a></label>
-        				     		    {!! Form::text('password2', null, ['class'=>'form-control']) !!} 
-        				         	</div>
-        				         </div>
-
- 								<div class="col-md-4">
- 									<a href="">Sudah punya akun?</a>
- 									<a class="link" href="{{ route('login') }}">Login disini</a>
-         				         </div>
-
-        				         <div class="col-md-3 pull-right">
-        				             {!! Form::submit('Submit', ['class'=>'btn submitButton']) !!} 
-        				         </div> 
-        				         {!! Form::close() !!}
-                			</div>
-                		</div>
-
-                	</div><!--/.rolandthemes-circle-tabs-->
+						</div>
 
                 </div><!--/.col-md-12-->
 

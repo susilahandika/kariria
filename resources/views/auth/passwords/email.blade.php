@@ -1,47 +1,60 @@
-@extends('layouts.app')
+@extends('masterweb')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+@section('login', 'active')
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+@section('body')
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
+<link href="{{ asset('css/login.css') }}" rel="stylesheet" />
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li>Login</li>
         </div>
     </div>
 </div>
-@endsection
+
+<div class="services">
+    <div class="container" >  
+
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>        
+        @endif
+
+        <div class="col-lg-4 col-md-3 col-sm-2"></div>
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="row loginbox">                    
+                <div class="col-lg-12">
+                    <span class="singtext" >Reset Password </span>   
+                </div>
+
+                {!! Form::open(['url' => route('password.email'), 'method' => 'post']) !!}
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    {{-- <input class="form-control" type="text" placeholder="Please enter your email" >  --}}
+                    {!! Form::text('email', old('email'), ['class'=>'form-control', 'placeholder'=>'Masukkan email anda']) !!}
+                </div>
+                <div class="col-lg-6  col-md-6 col-sm-6">
+                    {{-- <a href="#" class="btn  submitButton">Login </a>  --}}
+                    {!! Form::submit('Kirim Password', ['class'=>'btn submitButton']) !!}
+                </div> 
+                {!! Form::close() !!}
+
+            </div>
+            <div class="row forGotPassword">
+                
+            </div>
+            <br>                
+            <br>
+
+        </div>
+    </div>
+</div>
+
+@stop
