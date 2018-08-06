@@ -39,18 +39,18 @@
                 		<!-- Tab panes -->
                 		<div class="tab-content">
                 			<div role="tabpanel" class="tab-pane active" id="employee"><br>
-	                			{!! Form::open(['url' => 'storeemployee', 'method' => 'post']) !!}
+	                			{!! Form::open(['url' => route('register'), 'method' => 'post']) !!}
         						<div class="col-lg-12 col-md-12 col-sm-12">
         				         	<div class="group-form">
         				     			<label><a>Nama Lengkap</a></label>
-        				     		    {!! Form::text('fullname', old('fullname'), ['class'=>'form-control']) !!} 
+        				     		    {!! Form::text('name', old('name'), ['class'=>'form-control']) !!} 
         				         	</div>
         				         </div>
 
                                  <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="group-form">
                                         <label><a>Type</a></label>
-                                        {!! Form::select('size', array('P' => 'Pelamar', 'C' => 'Perusahaan'), null, ['class'=>'form-control']) !!} 
+                                        {!! Form::select('type', array('1' => 'Pelamar', '2' => 'Perusahaan'), null, ['class'=>'form-control', 'placeholder'=>'pilih type..']) !!} 
                                     </div>
                                  </div>
 
@@ -71,7 +71,7 @@
         				         <div class="col-lg-12 col-md-12 col-sm-12">
         				         	<div class="group-form">
         				     			<label><a>Ulangi Password</a></label>
-        				     		    {!! Form::password('password2', ['class'=>'form-control']) !!}
+        				     		    {!! Form::password('password_confirmation', ['class'=>'form-control']) !!}
         				         	</div>
         				         </div>
 								

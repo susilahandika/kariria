@@ -134,7 +134,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                                 </div>
                             </li>
                         </ul>
@@ -171,7 +171,7 @@
                         <a href="{{ route('admin') }}"><i class="fa fa-home"></i> <span>Home</span></a>
                     </li>
                     <li class="@yield('mn_findemployee', '')">
-                        <a href="{{ route('findemployee') }}"><i class="fa fa-book"></i> <span>Find Candidate</span></a>
+                        <a href="{{ route('candidates.index') }}"><i class="fa fa-book"></i> <span>Find Candidate</span></a>
                     </li>
                     <li class="@yield('mn_setting', '')">
                         <a href="#"><i class="fa fa-calendar"></i> <span>Sechedule Interview</span></a>
@@ -205,12 +205,12 @@
         </div>
 
         <!-- /.content-wrapper -->
-        <!-- <footer class="main-footer">
+        {{-- <footer class="main-footer">
             <div class="pull-right hidden-xs">
                <b>Version</b> 1.0.0
            </div>
            <strong>Copyright &copy; 2018 <a href="{{ route('root') }}">Kariria</a>.</strong>
-        </footer> -->
+        </footer> --}}
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">

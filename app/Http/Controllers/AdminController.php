@@ -7,11 +7,16 @@ use DB;
 use Exception;
 use App;
 
-class Admin extends Controller
+class AdminController extends Controller
 {
+    public function __cosnstruct()
+	{
+		$this->middleware('auth');
+	}
+    
     public function index()
     {
-    	return view('masteradmin');    	
+    	return view('masteradmin');
     }
 
     public function findemployee()

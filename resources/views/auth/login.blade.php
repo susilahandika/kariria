@@ -35,7 +35,7 @@
                     <span class="singtext" >login </span>   
                 </div>
 
-                {!! Form::open(['url' => 'ceklogin', 'method' => 'post']) !!}
+                {!! Form::open(['url' => route('login'), 'method' => 'post']) !!}
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     {{-- <input class="form-control" type="text" placeholder="Please enter your email" >  --}}
                     {!! Form::text('email', old('email'), ['class'=>'form-control', 'placeholder'=>'Masukkan email anda']) !!}

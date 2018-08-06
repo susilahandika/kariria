@@ -8,6 +8,8 @@
     <title>Kariria</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     <link href="{{ asset('css/prettyPhoto.css') }}" rel="stylesheet">
@@ -18,10 +20,15 @@
     <script src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('js/jquery.isotope.min.js') }}"></script>
     <script src="{{ asset('js/wow.min.js') }}"></script>
-    <script src="{{ asset('js/functions.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/functions.js') }}"></script> --}}
+
+    
 </head>
 
 <body>
@@ -47,8 +54,8 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation"><a href="{{ route('employeehome') }}" class="mainmenu @yield('home', '')">Home</a></li>
                                 <li role="presentation"><a href="{{ route('interview') }}" class="mainmenu @yield('interview', '')">Interview</a></li>
-                                <li role="presentation"><a href="{{ route('profile') }}" class="mainmenu @yield('profile', '')">Profil</a></li>
-                                <li role="presentation"><a href="{{ route('root') }}" class="mainmenu">Logout</a></li>
+                                <li role="presentation"><a href="{{ route('identities.index') }}" class="mainmenu @yield('profile', '')">Profil</a></li>
+                                <li role="presentation"><a href="{{ route('logout') }}" class="mainmenu">Logout</a></li>
                             </ul>
                         </div>
                     </div>

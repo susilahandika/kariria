@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use DB;
+use Exception;
 
 class RegisterController extends Controller
 {
@@ -27,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'identities';
 
     /**
      * Create a new controller instance.
@@ -48,9 +50,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'type'     => 'required',
         ]);
     }
 
@@ -62,10 +65,40 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+
+       try {
+            DB::beginTransaction();
+
+            $register = User::create([
+               'name'     => $data['name'],
+               'email'    => $data['email'],
+               'password' => bcrypt($data['password']),
+               'type'     => $data['type'],
+            ]);
+
+            DB::table('identities')->insert([
+               'email' => $data['email'],
+               'name'  => $data['name'],
+            ]);
+
+            DB::table('educations')->insert([
+               'email' => $data['email'],
+            ]);
+
+            DB::table('references')->insert([
+               'email' => $data['email'],
+            ]);
+
+            DB::table('photos')->insert([
+               'email' => $data['email'],
+            ]);
+
+            DB::commit();
+
+            return $register;
+       } catch (Exception $e) {
+            DB::rollBack();
+            echo ("Error load data " . $e->getMessage());
+       }
     }
 }

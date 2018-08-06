@@ -86,7 +86,13 @@ class Root extends Controller
         ]);
 
         try {
-            App\Employee::create($datasignup);
+            /*App\Employee::create($datasignup);
+            DB::table('identities')->insert([
+                'email' => $request->input('email'),
+                'name' => $request->input('name'),
+            ]);*/
+
+            echo "nama " . $request->input('name');
         } catch (Exception $e) {
             $errorCode = $e->errorInfo[1];
             if($errorCode == 1062){
