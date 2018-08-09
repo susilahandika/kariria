@@ -63,7 +63,20 @@ class CandidatesController extends Controller
      */
     public function show($id)
     {
-        //
+        $candidates = DB::table('show_candidate')->where('email', '=', $id)->get();
+        $educations = DB::table('educations')->where('email', '=', $id)->get();
+        $experiences = DB::table('experiences')->where('email', '=', $id)->get();
+        $skills = DB::table('skill_candidate')->where('email', '=', $id)->get();
+        $languages = DB::table('lang_candidate')->where('email', '=', $id)->get();
+
+        return view('admin.detailcandidate', [
+			'candidates'  => $candidates,
+			'educations'  => $educations,
+			'experiences' => $experiences,
+			'skills'      => $skills,
+			'languages'   => $languages,
+		]);
+
     }
 
     /**

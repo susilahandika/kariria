@@ -32,7 +32,7 @@
 										<i class="fa fa-mobile" aria-hidden="true"></i> {{ $candidate['telp'] }}
 									</td>
 									<td style="vertical-align: bottom !important;" align="right">
-										<a href="#" class="btn btn-warning btn-sm">Detail</a>
+										<a href="{{ route('candidates.show', $candidate['email']) }} " class="btn btn-warning btn-sm">Detail</a>
 										<a href="#" class="btn btn-success btn-sm">Proses</a>
 									</td>
 								</tr>
