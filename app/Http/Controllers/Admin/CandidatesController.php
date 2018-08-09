@@ -31,10 +31,7 @@ class CandidatesController extends Controller
                                 ->where('users.type', '=', 1)
                                 ->get()->toArray();
 
-        echo "<pre>";
-        print_r($candidates);
-        echo "</pre>";
-        // return view('admin.candidate');
+        return view('admin.candidate')->with('candidates', $candidates);
     }
 
     /**

@@ -11,55 +11,37 @@
 
 @section('body')
 
-	<div class="row">
-		<div class="col-xs-12">
-
-			<div class="box">
-				<!-- /.box-header -->
-				<div class="box-body">
-					<div class="form-group">
-						<label>Majors</label>
-						<select class="form-control select2" multiple="multiple" data-placeholder="Select..." style="width: 100%;">
-							<option>Teknik Informatika</option>
-							<option>Ilmu Komputer</option>
-							<option>Teknik Industri</option>
-							<option>Komputer Akuntansi</option>
-						</select>
-					</div>
-
-					<div class="form-group">
-						<label>Skill</label>
-						<select class="form-control select2" multiple="multiple" data-placeholder="Select..." style="width: 100%;">
-							<option>PHP</option>
-							<option>Laravel</option>
-							<option>MYSQL</option>
-							<option>ORACLE</option>
-						</select>
-					</div>
-
-					<div class="form-group col-md-12 row">
-						<div class="col-md-12 row"><label>Age</label></div>
-						<div class="col-md-4 row">
-							<div class="input-group">
-								<input type="text" class="form-control input-sm">
-								<span class="input-group-addon"> - </span>
-								<input type="text" class="form-control input-sm">
-							</div>
-						</div>
-					</div>
-
-					<div class="">
-						<div class="form-group">
-							<input type="submit" class="btn btn-success" name="" value="Get Employee">
-						</div>
-					</div>
-				</div>
-				<!-- /.box-body -->
+	<div class="box">
+		<div class="box-body">
+			<div class="" style="padding-top:5px;">
+				<a href="#" class="btn btn-success"><i class="fa fa-filter" aria-hidden="true"></i></a><hr>
 			</div>
-			<!-- /.box -->
+			<div class='table-responsive'>
+				<table class='table table-striped table-hover table-condensed' width="100%">
+					<tbody>
+						@if (!is_null($candidates) and !session('error'))
+							@foreach ($candidates as $candidate)
+								@php
+						            $path_img = '/images/userPhoto/' . $candidate['photo'];
+						        @endphp
+								<tr>
+									<td style="width:20%;"><img src="{{ URL::asset($path_img) }}" width="128" height="128"></td>
+									<td>
+										<h4>{{ $candidate['name'] }}</h4> <br>
+										{{ $candidate['email'] }} <br>
+										<i class="fa fa-mobile" aria-hidden="true"></i> {{ $candidate['telp'] }}
+									</td>
+									<td style="vertical-align: bottom !important;" align="right">
+										<a href="#" class="btn btn-warning btn-sm">Detail</a>
+										<a href="#" class="btn btn-success btn-sm">Proses</a>
+									</td>
+								</tr>
+							@endforeach
+						@endif
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<!-- /.col -->
 	</div>
-	<!-- /.row -->
 
 @stop
