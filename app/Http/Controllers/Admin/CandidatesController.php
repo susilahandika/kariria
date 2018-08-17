@@ -21,17 +21,6 @@ class CandidatesController extends Controller
      */
     public function index()
     {
-        // $candidates = \App\User::join('identities', function ($join) {
-        //                             $join->on('users.email', '=', 'identities.email');
-        //                         })
-        //                         ->join('photos', function ($join) {
-        //                             $join->on('users.email', '=', 'photos.email');
-        //                         })
-        //                         ->select('users.email', 'users.name', 'identities.telp', 'photos.photo')
-        //                         ->where('users.type', '=', 1)
-        //                         ->get()->toArray();
-        //
-        // return view('admin.candidate')->with('candidates', $candidates);
         $skill_types = DB::table('skill_types')->pluck('skill_type', 'id');
 
         return view('admin.findcandidate', [
@@ -119,9 +108,9 @@ class CandidatesController extends Controller
     }
 
     public function find(Request $request){
-        $skills = $request->input('skill');
+        // $skills = $request->input('skill');
 
-        $candidates = \App\Candidate::findCandidate($skills);
+        $candidates = \App\Candidate::findCandidate($request);
 
         return view('admin.candidate')->with('candidates', $candidates);
     }

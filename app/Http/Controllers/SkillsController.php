@@ -138,4 +138,14 @@ class SkillsController extends Controller
     {
         //
     }
+
+    public function findSkillTypes(Request $request){
+        $cari = $request->q;
+        $skill_types = DB::table('skill_types')
+                            ->select('id', 'skill_type')
+                            ->where("skill_type", "like", "%$cari%")
+                            ->get();
+
+        return \Response::json($skill_types);
+    }
 }
