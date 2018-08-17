@@ -22,17 +22,17 @@
 						@if (!is_null($candidates) and !session('error'))
 							@foreach ($candidates as $candidate)
 								@php
-						            $path_img = '/images/userPhoto/' . $candidate['photo'];
+						            $path_img = '/images/userPhoto/' . $candidate->photo;
 						        @endphp
 								<tr>
 									<td style="width:20%;"><img src="{{ URL::asset($path_img) }}" width="128" height="128"></td>
 									<td>
-										<h4>{{ $candidate['name'] }}</h4> <br>
-										{{ $candidate['email'] }} <br>
-										<i class="fa fa-mobile" aria-hidden="true"></i> {{ $candidate['telp'] }}
+										<h4>{{ $candidate->name }}</h4> <br>
+										{{ $candidate->email }} <br>
+										<i class="fa fa-mobile" aria-hidden="true"></i> {{ $candidate->telp }}
 									</td>
 									<td style="vertical-align: bottom !important;" align="right">
-										<a href="{{ route('candidates.show', $candidate['email']) }} " class="btn btn-warning btn-sm">Detail</a>
+										<a href="{{ route('candidates.show', $candidate->email) }} " class="btn btn-warning btn-sm">Detail</a>
 										<a href="#" class="btn btn-success btn-sm">Proses</a>
 									</td>
 								</tr>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 */
 
 Route::group(['middleware' => 'auth'], function(){
-  Route::get('admin', ['as'=>'admin', 'uses'=>'AdminController@index']);
-  Route::resource('candidates', 'Admin\CandidatesController');
+    Route::get('admin', ['as'=>'admin', 'uses'=>'AdminController@index']);
+    Route::get('candidates/find', ['as'=>'candidates.find', 'uses'=>'Admin\CandidatesController@find']);
+    Route::resource('candidates', 'Admin\CandidatesController');
 });

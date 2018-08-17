@@ -19,15 +19,17 @@ class EducationsController extends Controller
     $this->middleware('auth');
   }
 
-  public function index()
+  public function index(Request $request)
   {
     try {
 
       $levels = DB::table('levels')->pluck('level_name', 'level_name');
       $educations = \App\Education::where('email', Auth::user()->email)->get()->toArray();
 
-      $educations[0]['from_date'] = (is_null($educations[0]['from_date']) ? \Carbon\Carbon::now() : $educations[0]['from_date']);
-      $educations[0]['to_date'] = (is_null($educations[0]['to_date']) ? \Carbon\Carbon::now() : $educations[0]['to_date']);
+      if (count($educations) > 0) {
+          $educations[0]['from_date'] = (is_null($educations[0]['from_date']) ? \Carbon\Carbon::now() : $educations[0]['from_date']);
+          $educations[0]['to_date'] = (is_null($educations[0]['to_date']) ? \Carbon\Carbon::now() : $educations[0]['to_date']);
+      }
 
     } catch (Exception $e) {
       $request->session()->flash('error', "Error load data " . $e->getMessage());

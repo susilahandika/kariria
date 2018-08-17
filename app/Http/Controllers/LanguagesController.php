@@ -20,11 +20,15 @@ class LanguagesController extends Controller
 	*
 	* @return \Illuminate\Http\Response
 	*/
-	public function index()
+	public function index(Request $request)
 	{
-		$languages = \App\Language::where('email', Auth::user()->email)->get();
-		$langs     = DB::table('lang')->pluck('name', 'iso');
-		$scores    = DB::table('scores')->pluck('score', 'id');
+		try {
+			$languages = \App\Language::where('email', Auth::user()->email)->get();
+			$langs     = DB::table('lang')->pluck('name', 'iso');
+			$scores    = DB::table('scores')->pluck('score', 'id');
+        } catch (Exception $e) {
+            $request->session()->flash('error', "Error load data " . $e->getMessage());
+        }
 
 		return view('employee.language', [
 			'langs'     => $langs,

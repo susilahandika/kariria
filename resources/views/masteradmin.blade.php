@@ -13,7 +13,8 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}"> --}}
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -34,7 +35,8 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <!-- Select2 -->
-    <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    {{-- <script src="{{ asset('bower_components/select2/dist/js/select2.full.min.js') }}"></script> --}}
+    <script src="{{ asset('js/select2.min.js') }}"></script>
 </head>
 
 <style type="text/css" media="screen">
@@ -48,12 +50,6 @@
         padding-bottom: 10px;
     }
 </style>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.select2').select2();
-    });
-</script>
 
 <body class="hold-transition skin-green sidebar-mini">
 

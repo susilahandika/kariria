@@ -23,7 +23,10 @@ class CertificatesController extends Controller
   {
     try {
       $certificates = \App\Certificate::where('email', Auth::user()->email)->get()->toArray();
-      $certificates[0]['certificate_date'] = (is_null($certificates[0]['certificate_date']) ? \Carbon\Carbon::now() : $certificates[0]['certificate_date']);
+
+      if(count($certificates) > 0){
+          $certificates[0]['certificate_date'] = (is_null($certificates[0]['certificate_date']) ? \Carbon\Carbon::now() : $certificates[0]['certificate_date']);
+      }
 
     } catch (Exception $e) {
       $request->session()->flash('error', "Error load data " . $e->getMessage());

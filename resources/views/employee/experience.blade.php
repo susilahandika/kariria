@@ -24,7 +24,8 @@
 		</div>
 	@endif
 
-	@if (!is_null($experiences) and !session('error'))
+	{{-- @if (!is_null($experiences) and !session('error')) --}}
+	@if ($experiences)
 		@foreach ($experiences as $experience)
 
 			<div id="contents">
@@ -42,14 +43,13 @@
 
 						<div class="form-group">
 							<label for="">Posisi</label>
-							  {!! Form::select('position[]', $positions, $experience['position'], ['placeholder' => '...', 'class' => 'form-control']) !!}
+							{!! Form::select('position[]', $positions, $experience['position'], ['placeholder' => '...', 'class' => 'form-control']) !!}
 						</div>
 
 						<div class="form-group">
 							<label for="">Pengalaman Kerja</label>
 							<div class="input-group">
-								{!!
-									Form::date('from_date[]', $experience['from_date'], ['class'=>'form-control input', 'id'=>'sp_from_date'])
+								{!!	Form::date('from_date[]', $experience['from_date'], ['class'=>'form-control input', 'id'=>'sp_from_date'])
 									!!}
 									<a class="input-group-addon"> - </a>
 									{!! Form::date('to_date[]', $experience['to_date'], ['class'=>'form-control input', 'id'=>'sp_from_date']) !!}
@@ -73,65 +73,110 @@
 				</div>
 
 			@endforeach
-		@endif
+		@else
+			<div id="contents">
+				<div class="panel panel-default box">
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="">Nama Perusahaan</label>
+							{!! Form::text('company[]', null, ['class'=>'form-control input-sm']) !!}
+						</div>
 
-		<div id="copyContents"></div>
+						<div class="form-group">
+							<label for="">Bidang Kerja</label>
+							{!! Form::text('scope[]', null, ['class'=>'form-control input-sm']) !!}
+						</div>
 
-		<div class="">
-			{{-- <button class="btn btn-primary" id="add">add a dropdown</button> --}}
-			<a class="btn btn-warning btn-sm" id="add" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-		</div> <hr>
+						<div class="form-group">
+							<label for="">Posisi</label>
+							{!! Form::select('position[]', $positions, null, ['placeholder' => '...', 'class' => 'form-control']) !!}
+						</div>
 
-		<div class="group-input">
-			<div><input type="submit" class="btn btn-primary" name="" value="Simpan"></div>
-		</div>
+						<div class="form-group">
+							<label for="">Pengalaman Kerja</label>
+							<div class="input-group">
+								{!!
+									Form::date('from_date[]', null, ['class'=>'form-control input', 'id'=>'sp_from_date'])
+									!!}
+									<a class="input-group-addon"> - </a>
+									{!! Form::date('to_date[]', null, ['class'=>'form-control input', 'id'=>'sp_from_date']) !!}
+								</div>
+							</div>
 
-		{!! Form::close() !!}
+							<div class="form-group">
+								<label for="">Deskripsi Pekerjaan</label>
+								{{ Form::textarea('jobdesc[]', null, ['size' => '30x6', 'class'=>'form-control input-sm']) }}
+							</div>
 
-		<script>
-		function getDateNow(){
-			var date = new Date();
+							<div class="form-group">
+								<label for="">Alasan Resign</label>
+								{{ Form::textarea('reason_resign[]', null, ['size' => '30x6', 'class'=>'form-control input-sm']) }}
+							</div>
 
-			var day = date.getDate();
-			var month = date.getMonth() + 1;
-			var year = date.getFullYear();
+							<div id="area-del-content"></div>
+						</div>
 
-			if (month < 10) month = "0" + month;
-			if (day < 10) day = "0" + day;
+					</div>
+				</div>
+			@endif
 
-			var today = year + "-" + month + "-" + day;
+			<div id="copyContents"></div>
 
-			return today;
-		}
+			<div class="">
+				{{-- <button class="btn btn-primary" id="add">add a dropdown</button> --}}
+				<a class="btn btn-warning btn-sm" id="add" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+			</div> <hr>
 
-		$(document).ready(function () {
-			$('select').select2();
+			<div class="group-input">
+				<div><input type="submit" class="btn btn-primary" name="" value="Simpan"></div>
+			</div>
 
-			$("#add").click(function () {
+			{!! Form::close() !!}
 
-				$myClone = $("#contents").clone()
-				.appendTo('#copyContents');
+			<script>
+			function getDateNow(){
+				var date = new Date();
 
-				$myClone.find("span").remove();
-				$myClone.find('input[type="text"]').val("").end();
-				$myClone.find('input[type="date"]').val(getDateNow()).end();
-				$myClone.find('textarea').val("").end();
-				$myClone.find('select').select2({
-					width: '100%',
+				var day = date.getDate();
+				var month = date.getMonth() + 1;
+				var year = date.getFullYear();
+
+				if (month < 10) month = "0" + month;
+				if (day < 10) day = "0" + day;
+
+				var today = year + "-" + month + "-" + day;
+
+				return today;
+			}
+
+			$(document).ready(function () {
+				$('select').select2();
+
+				$("#add").click(function () {
+
+					$myClone = $("#contents").clone()
+					.appendTo('#copyContents');
+
+					$myClone.find("span").remove();
+					$myClone.find('input[type="text"]').val("").end();
+					$myClone.find('input[type="date"]').val(getDateNow()).end();
+					$myClone.find('textarea').val("").end();
+					$myClone.find('select').select2({
+						width: '100%',
+					});
+					$myClone.find('#area-del-content')
+					.append(
+						'<div class="pull-right">' +
+						'<a href="#" id="del-content" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>' +
+						'</div>'
+					);
 				});
-				$myClone.find('#area-del-content')
-				.append(
-					'<div class="pull-right">' +
-					'<a href="#" id="del-content" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>' +
-					'</div>'
-				);
-			});
 
-			$("body").on('click', '#del-content', function(event) {
-				event.preventDefault();
-				$(this).parents(':eq(3)').remove();
+				$("body").on('click', '#del-content', function(event) {
+					event.preventDefault();
+					$(this).parents(':eq(3)').remove();
+				});
 			});
-		});
-		</script>
+			</script>
 
-	@stop
+		@stop

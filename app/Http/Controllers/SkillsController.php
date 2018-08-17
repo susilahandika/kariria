@@ -19,12 +19,17 @@ class SkillsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $userSkills  = \App\Skill::where('email', Auth::user()->email)->get()->toArray();
-        // $years    = ['0 tahun','1 tahun','2 tahun','3 tahun','4 tahun','5 tahun','>5 tahun'];
-        $skill_types = DB        ::table('skill_types')->pluck('skill_type', 'id');
-        $scores      = DB        ::table('scores')->pluck('score', 'id');
+        try {
+            $userSkills  = \App\Skill::where('email', Auth::user()->email)->get()->toArray();
+            // $years    = ['0 tahun','1 tahun','2 tahun','3 tahun','4 tahun','5 tahun','>5 tahun'];
+            $skill_types = DB::table('skill_types')->pluck('skill_type', 'id');
+            $scores      = DB::table('scores')->pluck('score', 'id');
+
+        } catch (Exception $e) {
+            $request->session()->flash('error', "Error load data " . $e->getMessage());
+        }
 
         return view('employee.skill', [
             'skill_types' => $skill_types,

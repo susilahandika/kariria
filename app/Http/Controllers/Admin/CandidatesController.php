@@ -21,17 +21,22 @@ class CandidatesController extends Controller
      */
     public function index()
     {
-        $candidates = \App\User::join('identities', function ($join) {
-                                    $join->on('users.email', '=', 'identities.email');
-                                })
-                                ->join('photos', function ($join) {
-                                    $join->on('users.email', '=', 'photos.email');
-                                })
-                                ->select('users.email', 'users.name', 'identities.telp', 'photos.photo')
-                                ->where('users.type', '=', 1)
-                                ->get()->toArray();
+        // $candidates = \App\User::join('identities', function ($join) {
+        //                             $join->on('users.email', '=', 'identities.email');
+        //                         })
+        //                         ->join('photos', function ($join) {
+        //                             $join->on('users.email', '=', 'photos.email');
+        //                         })
+        //                         ->select('users.email', 'users.name', 'identities.telp', 'photos.photo')
+        //                         ->where('users.type', '=', 1)
+        //                         ->get()->toArray();
+        //
+        // return view('admin.candidate')->with('candidates', $candidates);
+        $skill_types = DB::table('skill_types')->pluck('skill_type', 'id');
 
-        return view('admin.candidate')->with('candidates', $candidates);
+        return view('admin.findcandidate', [
+            'skill_types' => $skill_types,
+        ]);
     }
 
     /**
@@ -111,5 +116,13 @@ class CandidatesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function find(Request $request){
+        $skills = $request->input('skill');
+
+        $candidates = \App\Candidate::findCandidate($skills);
+
+        return view('admin.candidate')->with('candidates', $candidates);
     }
 }
