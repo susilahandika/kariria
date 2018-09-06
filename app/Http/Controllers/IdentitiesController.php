@@ -35,26 +35,6 @@ class IdentitiesController extends Controller
 
     }
 
-    public function create()
-    {
-
-    }
-
-    public function store(Request $request)
-    {
-
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -89,10 +69,5 @@ class IdentitiesController extends Controller
 
         return redirect()->route('identities.index');
 
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

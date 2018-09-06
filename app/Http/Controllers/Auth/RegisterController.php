@@ -76,22 +76,33 @@ class RegisterController extends Controller
                'type'     => $data['type'],
             ]);
 
-            DB::table('identities')->insert([
-               'email' => $data['email'],
-               'name'  => $data['name'],
-            ]);
+            if ($data['type'] == 1) {
 
-            DB::table('educations')->insert([
-               'email' => $data['email'],
-            ]);
+                DB::table('identities')->insert([
+                   'email' => $data['email'],
+                   'name'  => $data['name'],
+                ]);
 
-            DB::table('references')->insert([
-               'email' => $data['email'],
-            ]);
+                DB::table('educations')->insert([
+                   'email' => $data['email'],
+                ]);
 
-            DB::table('photos')->insert([
-               'email' => $data['email'],
-            ]);
+                DB::table('references')->insert([
+                   'email' => $data['email'],
+                ]);
+
+                DB::table('photos')->insert([
+                   'email' => $data['email'],
+                ]);
+
+                $this->redirectTo = 'identities';
+            } else {
+                DB::table('companies')->insert([
+                   'email' => $data['email'],
+                ]);
+
+                $this->redirectTo = 'admin';
+            }
 
             DB::commit();
 
@@ -100,5 +111,9 @@ class RegisterController extends Controller
             DB::rollBack();
             echo ("Error load data " . $e->getMessage());
        }
+    }
+
+    public function redirectTo(){
+        return $this->redirectTo;
     }
 }

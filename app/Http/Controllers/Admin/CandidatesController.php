@@ -14,11 +14,6 @@ class CandidatesController extends Controller
         $this->middleware('auth');
 	}
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $skill_types = DB::table('skill_types')->pluck('skill_type', 'id');
@@ -28,33 +23,6 @@ class CandidatesController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $candidates = DB::table('show_candidate')->where('email', '=', $id)->get();
@@ -73,45 +41,34 @@ class CandidatesController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function find(Request $request){
         // $skills = $request->input('skill');
 
         $candidates = \App\Candidate::findCandidate($request);
 
         return view('admin.candidate')->with('candidates', $candidates);
+    }
+
+    public function insertInterview(Request $request)
+    {
+        $dataInterview = $request->except('_token', 'oldurl');
+        $email = $request->input('email');
+        $oldurl = $request->input('oldurl');
+
+        try {
+            DB::beginTransaction();
+
+            DB::table('interviews')->where('email', '=', $email)->delete();
+            DB::table('interviews')->insert($dataInterview);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            // $request->session()->flash('error', "Error load data " . $e->getMessage());
+            echo "Error load data " . $e->getMessage();
+        }
+
+        return redirect("candidates/find$oldurl");
+
     }
 }

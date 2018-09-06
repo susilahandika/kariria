@@ -10,124 +10,63 @@ use Auth;
 class CertificatesController extends Controller
 {
 
-  public function __cosnstruct()
-  {
-    $this->middleware('auth');
-  }
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request)
-  {
-    try {
-      $certificates = \App\Certificate::where('email', Auth::user()->email)->get()->toArray();
+    public function __cosnstruct()
+    {
+        $this->middleware('auth');
+    }
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function index(Request $request)
+    {
+        try {
+            $certificates = \App\Certificate::where('email', Auth::user()->email)->get()->toArray();
 
-      if(count($certificates) > 0){
-          $certificates[0]['certificate_date'] = (is_null($certificates[0]['certificate_date']) ? \Carbon\Carbon::now() : $certificates[0]['certificate_date']);
-      }
+            if(count($certificates) > 0){
+                $certificates[0]['certificate_date'] = (is_null($certificates[0]['certificate_date']) ? \Carbon\Carbon::now() : $certificates[0]['certificate_date']);
+            }
 
-    } catch (Exception $e) {
-      $request->session()->flash('error', "Error load data " . $e->getMessage());
+        } catch (Exception $e) {
+            $request->session()->flash('error', "Error load data " . $e->getMessage());
+        }
+
+        // return view('employee.certificate', [
+        // 	'certificates' => $certificates,
+        // ]);
+        return view('employee.certificate')->with('certificates', $certificates);
     }
 
-    // return view('employee.certificate', [
-    // 	'certificates' => $certificates,
-    // ]);
-    return view('employee.certificate')->with('certificates', $certificates);
-  }
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
 
-  /**
-  * Show the form for creating a new resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function create()
-  {
-    //
-  }
+            $certificate = $request->except('_token', '_method');
 
-  /**
-  * Store a newly created resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @return \Illuminate\Http\Response
-  */
-  public function store(Request $request)
-  {
-    try {
-      DB::beginTransaction();
+            for ($i=0; $i<count($certificate['certificate_name']); $i++) {
+                $data_certificate = array(
+                    'email'            => $certificate['email'],
+                    'certificate_name' => $certificate['certificate_name'][$i],
+                    'certificate_date' => $certificate['certificate_date'][$i],
+                );
 
-      $certificate = $request->except('_token', '_method');
+                $data_certificates[] = $data_certificate;
+            }
 
-      for ($i=0; $i<count($certificate['certificate_name']); $i++) {
-        $data_certificate = array(
-          'email'            => $certificate['email'],
-          'certificate_name' => $certificate['certificate_name'][$i],
-          'certificate_date' => $certificate['certificate_date'][$i],
-        );
+            \App\Certificate::where('email', $email)->delete();
 
-        $data_certificates[] = $data_certificate;
-      }
+            \App\Certificate::insert($data_certificates);
 
-      \App\Certificate::where('email', $email)->delete();
+            DB::commit();
 
-      \App\Certificate::insert($data_certificates);
+            $request->session()->flash('success', 'Data berhasil diubah');
+        } catch (Exception $e) {
+            DB::rollBack();
+            $request->session()->flash('error', "Error ubah data " . $e->getMessage());
+        }
 
-      DB::commit();
-
-      $request->session()->flash('success', 'Data berhasil diubah');
-    } catch (Exception $e) {
-      DB::rollBack();
-      $request->session()->flash('error', "Error ubah data " . $e->getMessage());
+        return redirect()->route('certificates.index')->withInput();
     }
-
-    return redirect()->route('certificates.index')->withInput();
-  }
-
-  /**
-  * Display the specified resource.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function show($id)
-  {
-    //
-  }
-
-  /**
-  * Show the form for editing the specified resource.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function edit($id)
-  {
-    //
-  }
-
-  /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function update(Request $request, $id)
-  {
-    //
-  }
-
-  /**
-  * Remove the specified resource from storage.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function destroy($id)
-  {
-    //
-  }
 }
